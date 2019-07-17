@@ -1,0 +1,68 @@
+
+#home-right{
+    width: 50%;
+    height: auto;
+
+    #box-login{
+        width: 350px;
+        height: auto;
+        position: relative;
+        top: 150px;
+        left: 150px;
+        box-shadow:2px 2px #dfdfdf;
+        padding-bottom: 20px;
+        #title-login{
+            color: #55cbb0;
+            font-weight: bold;
+            height: 100px;
+            line-height: 100px;
+            display: block;
+            text-align: center;
+        }
+        #title-signup{
+            color: #55cbb0;
+            font-weight: bold;
+            height: 100px;
+            line-height: 100px;
+            display: none;
+            text-align: center;
+        }
+       #form-login{
+       
+           margin-left: 40px ;
+           margin-top: 10px;
+           .form-group{
+
+               input{
+                   margin: 10px 0;
+                   width: 250px;
+                   height: 20px;
+                   border: 1px solid #e8effe;
+                   background: #e8effe;
+               }
+               label{
+                   font-weight: 100;
+                   font-size: 12px;
+               }
+               button{
+                   
+                   margin-top:20px;
+                   padding: 4px 15px;
+                   max-height: 30px;
+                   color: #fff;
+                   width: 90px;
+                   background: #55cbb0;
+                   border: none;
+                   border-radius: 2px;
+               }
+               button[name="btn-sign"]{
+                   margin-left: 74px;
+               }
+           }
+       }
+       #confirm-pass{
+           display: none;
+       }
+
+    }
+}

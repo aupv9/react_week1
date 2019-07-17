@@ -1,14 +1,16 @@
 import React,{Component} from 'react';
 
-import './style/sass/main.scss';
-import Home from './pages/home'
+import Home from './pages/home';
+import Profile from './pages/profile';
+
 class App extends Component{
 
 
   render(){
     return (
       <div>
-        <Home></Home>
+        {/* <Home></Home> */}
+        <Profile></Profile>
       </div>
     );
   }

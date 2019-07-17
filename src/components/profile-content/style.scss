@@ -1,0 +1,59 @@
+
+
+
+/**/
+
+#content{
+    height: 550px;
+    position: relative;
+    #box-content{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+       transform: translate(-50%, -50%);
+       width: 800px;
+       height: 500px;
+      box-shadow:2px 2px 2px 2px #dfdfdf;
+      #form-main{
+          position: absolute;
+          top: 40%;
+          left: 50px;
+          width: 100%;
+          .button{
+             
+              .button-right{
+                width: 80%;
+                button{
+                    float: right;
+                    
+                }
+              }
+            
+          }
+         
+          label{
+            margin-right: 5px;
+          }
+          .div-input{
+              margin-right: 90px;
+          }
+          input{
+              width: 300px;
+              border-top: none;
+              border-left: none
+
+          }
+      }
+      #icon{
+         position: absolute;
+         top:10%;
+         left: 50%;
+         font-size: 100px;
+         color:#d7d7d7;
+      }
+      #infor-content{
+          position: absolute;
+          width: 100%;
+      }
+    }
+}
