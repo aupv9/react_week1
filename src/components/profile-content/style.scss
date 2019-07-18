@@ -4,15 +4,15 @@
 /**/
 
 #content{
-    height: 550px;
+    height: calc(100% - 100px);
     position: relative;
     #box-content{
         position: absolute;
         left: 50%;
         top: 50%;
        transform: translate(-50%, -50%);
-       width: 800px;
-       height: 500px;
+       width: 1200px;
+       height: 800px;
       box-shadow:2px 2px 2px 2px #dfdfdf;
       #form-main{
           position: absolute;
