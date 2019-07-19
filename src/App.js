@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 
 import Home from './pages/home';
 import Profile from './pages/profile';
+import RouterURL from './Router/Router';
 
 class App extends Component{
 
@@ -10,7 +11,7 @@ class App extends Component{
     return (
       <div>
         {/* <Home></Home> */}
-        <Profile></Profile>
+        <RouterURL></RouterURL>
       </div>
     );
   }

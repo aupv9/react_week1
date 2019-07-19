@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './style.scss';
-import {Typography }from '@material-ui/core';
+import { Redirect } from 'react-router-dom'
+// using ES6 modules
+import { createBrowserHistory } from 'history';
 
-
-
+export const history = createBrowserHistory();
 class HomeRight extends Component {
 
     // method lấy element qua Id
@@ -18,66 +19,73 @@ class HomeRight extends Component {
     constructor(props, context) {
         super(props, context);
         // this.showSignUp.bind(this);
-        this.state={
-            flagSign:false,
-            flagLog:true
-        }
+        
     }
     
+    state={
+        flagSign:false,
+        flagLog:true
+    }
 
     // function thực thi onclick của button sign up
-
-    showSignUp=()=>{
-        
-        
+    showSignUp=()=>{ 
        let signupElement=this.getById("title-signup");
-       
        let loginElement=this.getById("title-login");
        let confirmElement=this.getById("confirm-pass");
-       console.log(this.state.flagSign)
-
-       if(this.state.flagSign === false){
+       if(!this.state.flagSign && this.state.flagLog){ /// signup đang đóng và login đang mở thì ta cho nó hiện và ẩn đi login
         signupElement.style.display="block";
         confirmElement.style.display="block";
         loginElement.style.display="none";
-        this.setState((state)=>{
+        this.setState(()=>{
             return{
-                flagSign:!state.flagSign,
-                flagLog:false
+                flagSign:!this.state.flagSign, //true
+                flagLog: !this.state.flagLog   //false
             }
             
         })
-       }else{
-            confirmElement.style.display="none";
-            signupElement.style.display="none";
-            loginElement.style.display="block";
-            this.setState((state)=>{
-                return{
-                    flagSign:!state.flagSign
-                }
+        // console.log(this.state.flagSign)
+        // console.log(this.state.flagLog)
+       }else{ // signup đang mở và thực hiện việc signup
+
+         console.log(1)
+    //         confirmElement.style.display="none";
+    //         signupElement.style.display="none";
+    //         loginElement.style.display="block";
+    //         this.setState((state)=>{
+    //             return{
+    //                 flagSign:!this.state.flagSign
+    //             }
                 
-            })
-       }
+    //         })
+        }
     }
     showLogin=()=>{
         
         let signupElement=this.getById("title-signup");
-       
         let loginElement=this.getById("title-login");
         let confirmElement=this.getById("confirm-pass");
-        if(this.state.flagLog === false){
+        if(!this.state.flagLog && this.state.flagSign){
             confirmElement.style.display="none";
             signupElement.style.display="none";
             loginElement.style.display="block";
-            this.setState((state)=>{
+            this.setState(()=>{
                 return{
-                    flagSign:!state.flagSign,
+                    flaglog:!this.state.flagLog,
+                    flagSign:!this.state.flagSign
                    
                 }
                 
             })
-        }else{
-            alert('s');
+            console.log(this.state.flagSign)
+            console.log(this.state.flagLog)
+        }
+       else{
+            console.log(this.state.flagSign)
+            console.log(this.state.flagLog)
+            history.push("/profile");
+            window.location.reload();
+           // return <Redirect to={{ pathname: '/login'}}></Redirect>
+
         }
     }
     //    this.signupElement=Array.from(this.getElementByTag("button"));
@@ -88,14 +96,10 @@ class HomeRight extends Component {
     //             console.log(1);
     //         })
     //     });
-    
-   
-
-        
 
     render() {
         return (
-            <div id="home-right" class="col-xl-6 col-12">
+            <div id="home-right" className="col-xl-6 col-12">
                 <div  id="box-login">
                    <h1 id="title-login" className="title">LOGIN</h1>
                    <h1 id="title-signup"className="title" >SIGN UP</h1>

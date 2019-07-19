@@ -4,45 +4,52 @@ import './style.scss';
 
 
 class Profile_Content extends Component {
+
+
+    updateInfo = () =>{
+        
+    }
+
+
     render() {
         return (
             <div id="content" className="row">
                 <div id="box-content">
-                    <i class="far fa-user-circle" id="icon"></i>
+                    <i className="far fa-user-circle" id="icon"></i>
                     <form id="form-main">
                         <div className="row form-group">
                             <div className="col-xs-6 div-input ">
-                                 <label>Name</label><br></br>
-                                 <input></input>
+                                 <label>Display Name</label><br></br>
+                                 <input type="text" defaultValue=""></input>
                             </div>
                             <div className="col-xs-6 div-input">
-                            <label>Name</label><br></br>
-                                 <input></input>
-                            </div>
-                        </div>
-                        <div className="row form-group">
-                            <div className="col-xs-6 div-input">
-                                 <label>Name</label><br></br>
-                                 <input></input>
-                            </div>
-                            <div className="col-xs-6 div-input">
-                            <label>Name</label><br></br>
-                                 <input></input>
+                            <label>Display Info</label><br></br>
+                                 <input type="text" ></input>
                             </div>
                         </div>
                         <div className="row form-group">
                             <div className="col-xs-6 div-input">
-                                 <label>Name</label><br></br>
-                                 <input></input>
+                                 <label>Email</label><br></br>
+                                 <input type="Email"></input>
                             </div>
                             <div className="col-xs-6 div-input">
-                            <label>Name</label><br></br>
-                                 <input></input>
+                            <label>Phone Number</label><br></br>
+                                 <input type="text"></input>
+                            </div>
+                        </div>
+                        <div className="row form-group">
+                            <div className="col-xs-6 div-input">
+                                 <label>New Password</label><br></br>
+                                 <input type="Password"></input>
+                            </div>
+                            <div className="col-xs-6 div-input">
+                            <label>Confim Password</label><br></br>
+                                 <input type="Password"></input>
                             </div>
                         </div>
                         <div className="row button">
                             <div className="button-right">
-                            <button>Update</button>
+                            <button type="button" onClick={this.updateInfo}>UPDATE PROFILE</button>
                             </div>
                              
                          </div>
