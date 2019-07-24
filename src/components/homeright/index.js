@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import './style.scss';
-import { Redirect } from 'react-router-dom'
-// using ES6 modules
-import { createBrowserHistory } from 'history';
+import {Redirect} from 'react-router-dom';
+import axios from 'axios';
+import {connect} from'react-redux';
+import {clickShow,Login} from'../../redux/actions'
 
-export const history = createBrowserHistory();
+
+
+
 class HomeRight extends Component {
 
     // method lấy element qua Id
     getById= (id)=>{
         return document.getElementById(id);
     }
-
     // getElementByTag=(tag)=>{
     //     return document.getElementsByTagName(tag);
     
@@ -21,14 +23,16 @@ class HomeRight extends Component {
         // this.showSignUp.bind(this);
         
     }
-    
     state={
         flagSign:false,
-        flagLog:true
+        flagLog:true,
+        logSucess:false,
+        item:[],
+        email:"",
+        password:""
     }
-
     // function thực thi onclick của button sign up
-    showSignUp=()=>{ 
+    showSignUp= ()=>{ 
        let signupElement=this.getById("title-signup");
        let loginElement=this.getById("title-login");
        let confirmElement=this.getById("confirm-pass");
@@ -40,27 +44,16 @@ class HomeRight extends Component {
             return{
                 flagSign:!this.state.flagSign, //true
                 flagLog: !this.state.flagLog   //false
-            }
-            
+            }           
         })
-        // console.log(this.state.flagSign)
-        // console.log(this.state.flagLog)
        }else{ // signup đang mở và thực hiện việc signup
 
          console.log(1)
-    //         confirmElement.style.display="none";
-    //         signupElement.style.display="none";
-    //         loginElement.style.display="block";
-    //         this.setState((state)=>{
-    //             return{
-    //                 flagSign:!this.state.flagSign
-    //             }
-                
-    //         })
         }
     }
     showLogin=()=>{
         
+        this.props.onClick();
         let signupElement=this.getById("title-signup");
         let loginElement=this.getById("title-login");
         let confirmElement=this.getById("confirm-pass");
@@ -72,32 +65,24 @@ class HomeRight extends Component {
                 return{
                     flaglog:!this.state.flagLog,
                     flagSign:!this.state.flagSign
-                   
                 }
-                
             })
-            console.log(this.state.flagSign)
-            console.log(this.state.flagLog)
         }
-       else{
-            console.log(this.state.flagSign)
-            console.log(this.state.flagLog)
-            history.push("/profile");
-            window.location.reload();
-           // return <Redirect to={{ pathname: '/login'}}></Redirect>
-
+       else{       
+            if(this.props.onLogin(this.state.email,this.state.password)){}
+            this.setState({ logSucess:this.props.todos.success})
+            console.log(this.props.todos);
+           
         }
     }
-    //    this.signupElement=Array.from(this.getElementByTag("button"));
-    //    this.signupElement.forEach(element => {
-            
-    //         var btnSignup=element.querySelector('btn-signup');
-    //         btnSignup.addEventListener('click',()=>{
-    //             console.log(1);
-    //         })
-    //     });
 
     render() {
+      
+        if(this.state.logSucess){
+            return (
+                <Redirect to='/profile'></Redirect>
+            )
+        }
         return (
             <div id="home-right" className="col-xl-6 col-12">
                 <div  id="box-login">
@@ -129,4 +114,16 @@ class HomeRight extends Component {
     }
 }
 
-export default HomeRight;
+    const mapStateToProps=(state)=>({
+        todos:state.task
+    });
+    const mapDispatchToProps = (dispatch, ownProps) => ({
+        onClick: () => {
+            dispatch(clickShow('1'))
+        },
+        onLogin:(email,password)=>{
+            dispatch(Login("a2@vn.com","123456"))
+        }
+    
+    });
+export default connect(mapStateToProps,mapDispatchToProps)(HomeRight);
