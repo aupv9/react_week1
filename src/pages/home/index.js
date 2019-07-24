@@ -6,7 +6,7 @@ class Home extends Component {
     render() {
         return (
            <div id="home" className="container-fuild">
-               <div className="row w-100">
+               <div className="row w-100 h-100">
                <HomeLeft></HomeLeft>
                 <HomeRight></HomeRight>
                </div>

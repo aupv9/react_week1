@@ -2,8 +2,9 @@ import * as types from '../../types';
 
 import loginService from '../../services';
 
+var initState={success:false}
 
-var taskReducer=(state={success:false},action)=>{
+var taskReducer=(state=initState,action)=>{
     switch (action.type) {
         case types.LIST_ALL:
             return state;
@@ -11,11 +12,22 @@ var taskReducer=(state={success:false},action)=>{
              console.log(action.mess)
             return state;
         case types.LOGIN:
-            loginService(action.payload.email,action.payload.password).then((res)=>{
-                state.success=true;
+            if(loginService(action.payload.email,action.payload.password) !==null)
+            {
+                 
+                let user={
+                    email:action.payload.email,
+                    password:action.payload.password
+                }
+               
+                return Object.assign({},state,{
+                    user:user,
+                    success:true
+                });
+            }
+            else{
                 return state;
-            })
-            .catch(err => state.success=false);
+            }
             
         default:
             return state;

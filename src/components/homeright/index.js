@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './style.scss';
 import {Redirect} from 'react-router-dom';
-import axios from 'axios';
 import {connect} from'react-redux';
 import {clickShow,Login} from'../../redux/actions'
 
@@ -53,7 +52,6 @@ class HomeRight extends Component {
     }
     showLogin=()=>{
         
-        this.props.onClick();
         let signupElement=this.getById("title-signup");
         let loginElement=this.getById("title-login");
         let confirmElement=this.getById("confirm-pass");
@@ -69,16 +67,24 @@ class HomeRight extends Component {
             })
         }
        else{       
-            if(this.props.onLogin(this.state.email,this.state.password)){}
-            this.setState({ logSucess:this.props.todos.success})
-            console.log(this.props.todos);
+        this.props.onLogin(this.state.email,this.state.password)
+            if(this.props.todos.success){
+                this.setState({ logSucess:this.props.todos.success})
+            }
+            //console.log(this.props.todos);
            
         }
     }
-
+    componentWillMount(){
+        if(this.props.todos.success){
+            return (
+                <Redirect to='/profile'></Redirect>
+            )
+        }
+    }
     render() {
       
-        if(this.state.logSucess){
+        if(this.props.todos.success){
             return (
                 <Redirect to='/profile'></Redirect>
             )
