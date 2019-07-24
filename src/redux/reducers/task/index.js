@@ -1,6 +1,6 @@
-import * as types from '../../types'
+import * as types from '../../types';
 
-import loginService from '../../services'
+import loginService from '../../services';
 
 
 var taskReducer=(state={success:false},action)=>{
