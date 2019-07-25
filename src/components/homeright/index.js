@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './style.scss';
 import {Redirect} from 'react-router-dom';
 import {connect} from'react-redux';
-import {clickShow,Login} from'../../redux/actions'
-
-
+import {login} from'../../redux/actions'
 
 
 class HomeRight extends Component {
@@ -30,6 +28,8 @@ class HomeRight extends Component {
         email:"",
         password:""
     }
+
+
     // function thực thi onclick của button sign up
     showSignUp= ()=>{ 
        let signupElement=this.getById("title-signup");
@@ -67,7 +67,8 @@ class HomeRight extends Component {
             })
         }
        else{       
-        this.props.onLogin(this.state.email,this.state.password)
+      this.props.onLogin(this.state.email,this.state.password)
+           // this.loginFake();
             if(this.props.todos.success){
                 this.setState({ logSucess:this.props.todos.success})
             }
@@ -75,11 +76,16 @@ class HomeRight extends Component {
            
         }
     }
+    // loginFake(){
+    //     Login("a2@vn.com","123456")
+    // }
     componentWillMount(){
         if(this.props.todos.success){
             return (
                 <Redirect to='/profile'></Redirect>
             )
+        }else{
+            alert("Sai tài khoản hoặc mật khẩu")
         }
     }
     render() {
@@ -88,6 +94,9 @@ class HomeRight extends Component {
             return (
                 <Redirect to='/profile'></Redirect>
             )
+        }
+        else{
+            alert("Sai tài khoản hoặc mật khẩu")
         }
         return (
             <div id="home-right" className="col-xl-6 col-12">
@@ -121,15 +130,15 @@ class HomeRight extends Component {
 }
 
     const mapStateToProps=(state)=>({
-        todos:state.task
+        todos:state.task    
     });
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-        onClick: () => {
-            dispatch(clickShow('1'))
-        },
-        onLogin:(email,password)=>{
-            dispatch(Login("a2@vn.com","123456"))
+    const mapDispatchToProps = dispatch => {
+        return {
+            onLogin: (email, password) => { 
+                dispatch(login(email, password));
+            }
         }
+    };
     
-    });
+
 export default connect(mapStateToProps,mapDispatchToProps)(HomeRight);

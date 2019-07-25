@@ -1,21 +1,38 @@
-import * as types from '../types'
+import * as types from '../types';
+import axios from 'axios';
 
-
-export const listAll=()=>({
-    type:types.LIST_ALL
-})
-
-export const clickShow=(e)=>({
-    type:types.CLICK,
-    mess:e
-
-})
-
-export const Login=(email,pass)=>({
-    type:types.LOGIN,
-    payload:{
-        email:email,
-        password:pass
-    }
-    
-})
+function receiveData(json) {
+	return{
+		type: types.RECV_DATA,
+		data: json
+	}
+};
+function receiveError(json) {
+	return {
+		type: types.RECV_ERROR,
+		data: json
+	}
+};
+export const login = (email,pass) => {
+	return dispatch =>{
+		const body={
+			email:email,
+			password:pass
+		}
+		const res=axios.post('https://terralogic-training.web.app/api/login',body).then(data=>{	
+			console.log("runable")	
+				dispatch({
+					type: types.RECV_DATA,
+					data: true
+				})
+			}).catch(e=>{
+				console.log(e);
+				dispatch({
+					type: types.RECV_DATA,
+					data: false
+				})
+			})
+		
+		
+	} 
+}
