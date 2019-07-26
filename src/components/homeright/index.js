@@ -2,33 +2,76 @@ import React, { Component } from 'react';
 import './style.scss';
 import {Redirect} from 'react-router-dom';
 import {connect} from'react-redux';
-import {login} from'../../redux/actions'
-
-
+import {login,singup} from'../../redux/actions'
+import Swal from 'sweetalert2'
+ 
 class HomeRight extends Component {
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.todos.success){
+            this.setState({ logSucess:nextProps.todos.success})
+        }else{
+            Swal.fire({
+                    title: 'Sai tài khoản hoặc mật khẩu ',
+                    animation: true,
+                    type: 'warning',
+                    customClass: {
+                      popup: 'animated tada'
+                    }
+            })
+        }
+        if(nextProps.todos.signupSuccess){
+            console.log(nextProps.todos.signupSuccess)
+            let signupElement=this.getById("title-signup");
+            let loginElement=this.getById("title-login");
+            let confirmElement=this.getById("confirm-pass");
+            confirmElement.style.display="none";
+            signupElement.style.display="none";
+            loginElement.style.display="block";
+            this.setState(()=>{
+                return{
+                    flaglog:!this.state.flagLog,
+                    flagSign:!this.state.flagSign
+                }
+            })
+            Swal.fire({
+                title: 'Đăng ký thành công',
+                animation: true,
+                type: 'success',
+                customClass: {
+                  popup: 'animated tada'
+                }
+            
+            })
+        }else{
+            Swal.fire({
+                title: 'Đăng ký thất bại',
+                animation: true,
+                type: 'error',
+                customClass: {
+                  popup: 'animated tada'
+                }
+            
+            })
+        }
+    }
     // method lấy element qua Id
     getById= (id)=>{
         return document.getElementById(id);
     }
-    // getElementByTag=(tag)=>{
-    //     return document.getElementsByTagName(tag);
-    
-    // }
     constructor(props, context) {
         super(props, context);
-        // this.showSignUp.bind(this);
-        
     }
     state={
         flagSign:false,
         flagLog:true,
         logSucess:false,
-        item:[],
         email:"",
-        password:""
+        password:"",
+        confirmPassword:"",
+        isInputValid: true,
+        errorMessage: ''
     }
-
 
     // function thực thi onclick của button sign up
     showSignUp= ()=>{ 
@@ -46,12 +89,70 @@ class HomeRight extends Component {
             }           
         })
        }else{ // signup đang mở và thực hiện việc signup
-
-         console.log(1)
+            const pass = {
+                password:this.state.password,
+                confirmPassword:this.state.confirmPassword
+            };
+            if (pass.password === "" || pass.password !== pass.confirmPassword) {
+                console.log(pass)
+                Swal.fire({
+                    title: 'Mật khẩu phải nhập giống nhau',
+                    type: 'warning',
+                    animation: false,
+                    customClass: {
+                      popup: 'animated tada'
+                    }
+                  })
+            } else {
+                // make API call 
+                //alert("yes")
+                this.props.onSignup(this.state.email,this.state.password);
+            }
         }
     }
+    // method để set value cho state 
+    handleChange=(e)=>{
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
+    }
+    FormError=(isHidden,errorMessage) =>{
+        if (isHidden) {return null;}
+        return (
+          <div className="form-warning" >
+              {errorMessage}
+          </div>
+        )
+      }
+    
+    //method kiểm tra giá trị email nhập vào 
+    handleInputValidation = event => {
+        const { isInputValid, errorMessage } = this.validateInput(this.state.email);
+        this.setState({
+          isInputValid: isInputValid,
+          errorMessage: errorMessage
+        })
+      }
+    /// method kiểm tra email có định dạng hợp lệ không 
+     validateInput = (checkingText) => {
+        const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        if (regexp.exec(checkingText) !== null) {
+            return {
+                isInputValid: true,
+                errorMessage: ''
+            };
+        } else {
+            return {
+                isInputValid: false,
+                errorMessage: 'Bạn phải nhập đúng định dạng email (abc@email.com)'
+            };
+        }
+    }
+    //method login
     showLogin=()=>{
-        
         let signupElement=this.getById("title-signup");
         let loginElement=this.getById("title-login");
         let confirmElement=this.getById("confirm-pass");
@@ -67,59 +168,54 @@ class HomeRight extends Component {
             })
         }
        else{       
-      this.props.onLogin(this.state.email,this.state.password)
-           // this.loginFake();
-            if(this.props.todos.success){
-                this.setState({ logSucess:this.props.todos.success})
+           if(this.state.email && this.state.password && this.state.isInputValid)
+            this.props.onLogin(this.state.email,this.state.password)
+           else 
+             Swal.fire({
+            title: 'Không được để trống tài khoản hay mật khẩu',
+            animation: true,
+            type: 'warning',
+            customClass: {
+              popup: 'animated tada'
             }
-            //console.log(this.props.todos);
-           
-        }
+            })
+        }   
     }
-    // loginFake(){
-    //     Login("a2@vn.com","123456")
-    // }
-    componentWillMount(){
-        if(this.props.todos.success){
-            return (
-                <Redirect to='/profile'></Redirect>
-            )
-        }else{
-            alert("Sai tài khoản hoặc mật khẩu")
-        }
-    }
+    
     render() {
-      
-        if(this.props.todos.success){
-            return (
-                <Redirect to='/profile'></Redirect>
-            )
-        }
-        else{
-            alert("Sai tài khoản hoặc mật khẩu")
-        }
+      if(this.state.logSucess){
+        Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Bạn đã đăng nhập thành công',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          return <Redirect to="/profile"></Redirect>
+         
+      }
         return (
             <div id="home-right" className="col-xl-6 col-12">
                 <div  id="box-login">
                    <h1 id="title-login" className="title">LOGIN</h1>
                    <h1 id="title-signup"className="title" >SIGN UP</h1>
-
-                    <form id="form-login">
+                    <form id="form-login" >
                         <div className="form-group">
                         <label>Email</label><br />
-                        <input type="email" id="ip-email"></input>
+                        <input type="email" id="ip-email" onChange={this.handleChange} name="email" onBlur={this.handleInputValidation}></input>
+                        {this.FormError(this.state.isInputValid,
+                            this.state.errorMessage)}
                         </div>
                         <div className="form-group">
                         <label>Password</label><br />
-                        <input type="password" id="ip-pass"></input>
+                        <input type="password" id="ip-pass"name="password"onChange={this.handleChange}></input>
                         </div>
                         <div className="form-group" id="confirm-pass">
                         <label>Confirm Password</label><br />
-                        <input type="password" id="ip-pass"></input>
+                        <input type="password" id="ip-pass" name="confirmPassword" onChange={this.handleChange}></input>
                         </div>
                         <div className="form-group">
                             <button type="button" onClick={this.showLogin} >LOGIN</button>
-                            
                             <button type="button" onClick={this.showSignUp} id="btn-signup" name="btn-sign">SIGN UP</button>
                         </div>
                     </form>
@@ -130,15 +226,16 @@ class HomeRight extends Component {
 }
 
     const mapStateToProps=(state)=>({
-        todos:state.task    
+        todos:state.auth    
     });
     const mapDispatchToProps = dispatch => {
         return {
             onLogin: (email, password) => { 
                 dispatch(login(email, password));
+            },
+            onSignup:(email, password)=>{
+                dispatch(singup(email, password));
             }
         }
     };
-    
-
 export default connect(mapStateToProps,mapDispatchToProps)(HomeRight);

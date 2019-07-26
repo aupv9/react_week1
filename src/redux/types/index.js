@@ -1,7 +1,7 @@
 
-export const SUCCESS='SUCCESS';
-export const LOGIN='LOGIN';
-export const UPDATE='UPDATE';
-export const RECV_ERROR = 'RECV_ERROR';
-export const REQ_DATA = 'REQ_DATA';
-export const RECV_DATA = 'RECV_DATA';
+export const LOGIN_SUCCESS='LOGIN_SUCCESS';
+export const LOGIN_FAIL='LOGIN_FAIL';
+export const SIGNUP_SUCCESS='SIGNUP_SUCCESS';
+export const SIGNUP_FAIL='SIGNUP_FAIL';
+export const UPDATE_SUCCESS='UPDATE_SUCCESS';
+export const UPDATE_FAIL='UPDATE_FAIL';

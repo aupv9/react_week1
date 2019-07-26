@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import './style.scss';
-
-
+import {connect} from'react-redux';
+import {update} from'../../redux/actions'
 
 class Profile_Content extends Component {
 
 
     updateInfo = () =>{
         
-    }
-
-
+    }   
     render() {
         return (
             <div id="content" className="row">
@@ -60,5 +58,14 @@ class Profile_Content extends Component {
         );
     }
 }
-
-export default Profile_Content;
+    const mapStateToProps=(state)=>({
+        todos:state.auth    
+    });
+    const mapDispatchToProps = dispatch => {
+        return {
+        onUpdate:(infoUpdate)=>{
+           dispatch(update(infoUpdate));
+        }
+        }
+    };
+export default connect(mapStateToProps,mapDispatchToProps)(Profile_Content);

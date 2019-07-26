@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
-import taskReducer from './task';
+import taskReducer from './auth';
 
 
 
 export default combineReducers({
-    task:taskReducer
+    auth:taskReducer,
+
     });
 
 
