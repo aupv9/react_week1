@@ -1,6 +1,6 @@
 import * as types from '../../types';
 
-var initState={success:false,signupSuccess:false}
+var initState={loginSuccess:false,signupSuccess:false}
 
 var taskReducer=(state=initState,action)=>{
     switch (action.type) {
@@ -8,12 +8,12 @@ var taskReducer=(state=initState,action)=>{
             console.log(action.data)
             return {
                 ...state,
-                success: action.data
+                loginSuccess: action.data
             }
         case types.LOGIN_FAIL: 
             return  {
                 ...state,
-                success: action.data
+                loginSuccess: action.data
             }
         case types.SIGNUP_SUCCESS: 
             return  {

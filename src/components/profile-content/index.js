@@ -18,7 +18,7 @@ class Profile_Content extends Component {
                         <div className="row form-group">
                             <div className="col-xs-6 div-input ">
                                  <label>Display Name</label><br></br>
-                                 <input type="text" defaultValue=""></input>
+                                 <input type="text" defaultValue="" ></input>
                             </div>
                             <div className="col-xs-6 div-input">
                             <label>Display Info</label><br></br>

@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import HomeLeft from '../../components/homeleft';
-import HomeRight from '../../components/homeright';
 import './style.scss';
+import {Route } from 'react-router-dom'
+import Login from '../../components/login';
+import SignUp from '../../components/signup';
 class Home extends Component {
     render() {
+        console.log(this.props)
         return (
            <div id="home" className="container-fuild">
                <div className="row w-100 h-100">
                <HomeLeft></HomeLeft>
-                <HomeRight></HomeRight>
+               
+               <Route exact path={`${this.props.match.url}`} component={Login}></Route>
+               <Route  path={`${this.props.match.url}/login`} component={Login}></Route>
+               <Route  path={`${this.props.match.url}/sign-up`} component={SignUp}></Route>
+
                </div>
                
            </div>

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './style.scss';
 import {Redirect} from 'react-router-dom';
 import {connect} from'react-redux';
-import {login,singup} from'../../redux/actions'
+import {login} from'../../redux/actions'
 import Swal from 'sweetalert2'
- 
+ import {Route} from 'react-router-dom'
+import Login from '../login';
+import SignUp from '../signup';
 class HomeRight extends Component {
 
     componentWillReceiveProps(nextProps){
@@ -110,6 +112,7 @@ class HomeRight extends Component {
             }
         }
     }
+
     // method để set value cho state 
     handleChange=(e)=>{
         const target = e.target;
@@ -136,6 +139,7 @@ class HomeRight extends Component {
           errorMessage: errorMessage
         })
       }
+
     /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
         const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -147,12 +151,13 @@ class HomeRight extends Component {
         } else {
             return {
                 isInputValid: false,
-                errorMessage: 'Bạn phải nhập đúng định dạng email (abc@email.com)'
+                errorMessage: 'Email not valid (abc@vn.com)'
             };
         }
     }
+
     //method login
-    showLogin=()=>{
+    showLogin=()=>{ 
         let signupElement=this.getById("title-signup");
         let loginElement=this.getById("title-login");
         let confirmElement=this.getById("confirm-pass");
@@ -183,6 +188,7 @@ class HomeRight extends Component {
     }
     
     render() {
+        console.log(this.props.match)
       if(this.state.logSucess){
         Swal.fire({
             position: 'top-end',
@@ -196,30 +202,10 @@ class HomeRight extends Component {
       }
         return (
             <div id="home-right" className="col-xl-6 col-12">
-                <div  id="box-login">
-                   <h1 id="title-login" className="title">LOGIN</h1>
-                   <h1 id="title-signup"className="title" >SIGN UP</h1>
-                    <form id="form-login" >
-                        <div className="form-group">
-                        <label>Email</label><br />
-                        <input type="email" id="ip-email" onChange={this.handleChange} name="email" onBlur={this.handleInputValidation}></input>
-                        {this.FormError(this.state.isInputValid,
-                            this.state.errorMessage)}
-                        </div>
-                        <div className="form-group">
-                        <label>Password</label><br />
-                        <input type="password" id="ip-pass"name="password"onChange={this.handleChange}></input>
-                        </div>
-                        <div className="form-group" id="confirm-pass">
-                        <label>Confirm Password</label><br />
-                        <input type="password" id="ip-pass" name="confirmPassword" onChange={this.handleChange}></input>
-                        </div>
-                        <div className="form-group">
-                            <button type="button" onClick={this.showLogin} >LOGIN</button>
-                            <button type="button" onClick={this.showSignUp} id="btn-signup" name="btn-sign">SIGN UP</button>
-                        </div>
-                    </form>
-                </div>
+                <Route exact path={`${this.props.match.url}/login`} component={Login}>
+                </Route>
+                <Route path="/sign-up" component={SignUp}>
+                </Route>
             </div>
         );
     }
@@ -232,10 +218,8 @@ class HomeRight extends Component {
         return {
             onLogin: (email, password) => { 
                 dispatch(login(email, password));
-            },
-            onSignup:(email, password)=>{
-                dispatch(singup(email, password));
             }
+
         }
     };
 export default connect(mapStateToProps,mapDispatchToProps)(HomeRight);

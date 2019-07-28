@@ -20,6 +20,7 @@ body, html {
     height: 1000px;
     padding: 0;
     margin: 0;
+  
     
 }
 @media (max-width: 576px) {
@@ -60,6 +61,80 @@ body, html {
     }
   }
 }
+
+
+/*start box login*/
+  #box-login{
+      position: absolute;
+      width: 550px;
+      height: 500px;
+      position: relative;
+      top: 25%;
+      left: 10%;
+      box-shadow:2px 2px #dfdfdf;
+      padding-bottom: 20px;
+      .form-warning {
+          color: red;
+          margin-top: 10px;
+        }
+        
+      #title-login{
+          color: #55cbb0;
+          font-weight: bold;
+          height: 100px;
+          line-height: 100px;
+          display: block;
+          text-align: center;
+      }
+      #title-signup{
+          color: #55cbb0;
+          font-weight: bold;
+          height: 100px;
+          line-height: 100px;
+          text-align: center;
+      }
+     #form-login{
+     
+         margin-left: 40px ;
+         margin-top: 10px;
+         .form-group{
+            
+             input{
+                 margin: 10px 0;
+                 width: 450px;
+                 height: 50px;
+                 border: 1px solid #e8effe;
+                 background: #e8effe;
+             }
+             label{
+                 font-weight: 100;
+                 font-size: 18px;
+             }
+             button{
+                 
+                 margin-top:20px;
+                 padding: 4px 15px;
+                 height: 40px;
+                 max-height: 50px;
+                 color: #fff;
+                 width: 150px;
+                 background: #55cbb0;
+                 border: none;
+                 border-radius: 2px;
+               
+             }
+             #btn-signup{
+               margin-right: 150px;
+             }         
+             #sign-up{
+              margin-left: 150px;
+
+               }
+         }
+     }
+     
+
+  }
 
 
 

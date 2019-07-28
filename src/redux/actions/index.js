@@ -7,6 +7,8 @@ export const login = (email,pass) => {
 			email:email,
 			password:pass
 		}
+		console.log(pass)
+
 		axios.post('https://terralogic-training.web.app/api/login',body)
 		.then(data=>{	
 			console.log("runable")	
