@@ -140,7 +140,7 @@ class Login extends Component {
                      <button type="button" onClick={this.login} >LOGIN</button>
                     
                     <Link to="/home/sign-up" id="sign-up">
-                        <button type="button" >SIGN uP</button>
+                        <button type="button" >SIGN UP</button>
                     </Link>
                  </div>
              </form>
