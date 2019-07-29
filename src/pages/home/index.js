@@ -11,13 +11,10 @@ class Home extends Component {
            <div id="home" className="container-fuild">
                <div className="row w-100 h-100">
                <HomeLeft></HomeLeft>
-               
                <Route exact path={`${this.props.match.url}`} component={Login}></Route>
                <Route  path={`${this.props.match.url}/login`} component={Login}></Route>
                <Route  path={`${this.props.match.url}/sign-up`} component={SignUp}></Route>
-
-               </div>
-               
+               </div>   
            </div>
         );
     }

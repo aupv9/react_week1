@@ -7,24 +7,22 @@ export const login = (email,pass) => {
 			email:email,
 			password:pass
 		}
-		console.log(pass)
-
 		axios.post('https://terralogic-training.web.app/api/login',body)
 		.then(data=>{	
-			console.log("runable")	
-			console.log(data)	
 			dispatch({
 				type: types.LOGIN_SUCCESS,
-					data: true
+					isLoginSuccess: true,
+					data:data
 				})
-			})
+		})
 		.catch(e=>{
 			console.log(e);
 			dispatch({
 				type: types.LOGIN_FAIL,
-				data: false
+				isLoginSuccess: false,
+				data:e
 			})
-			})
+		})
 	} 
 }
 
@@ -36,7 +34,6 @@ export const singup = (email,pass) => {
 		}
 		axios.post('https://terralogic-training.web.app/api/sign_up',body)
 		.then(data=>{	
-			console.log(data)	
 			dispatch({
 				type: types.SIGNUP_SUCCESS,
 					data: true
@@ -48,25 +45,55 @@ export const singup = (email,pass) => {
 				type: types.SIGNUP_FAIL,
 				data: false
 			})
-			})
+		})
 	} 
 }
 
-export const update = (info) => {
+export const getProfile = (token) => {
 	return dispatch =>{
-		axios.post(' https://terralogic-training.web.app/api/set_profile',info)
+		const headers={
+			'x-user-token':token
+		}
+		axios.post('https://terralogic-training.web.app/api/get_profile',{},{headers:headers})
 		.then(data=>{	
-			console.log(data)	
+			console.log("succes get profile")	
 			dispatch({
-				type: types.UPDATE_SUCCESS,
-					data: true
+				type: types.GET_PROFILE_SUCCESS,
+					isGetSuccess:true,
+					data: data.data
 				})
 			})
 		.catch(e=>{
 			console.log(e);
 			dispatch({
-				type: types.UPDATE_FAIL,
-				data: false
+				type: types.GET_PROFILE_FAIL,
+				isGetSuccess:false,
+				data:[]
+			})
+		})
+	} 
+}
+
+
+export const update = (info,token) => {
+	return dispatch =>{
+		const headers={
+			'x-user-token':token
+		}
+		axios.post(' https://terralogic-training.web.app/api/set_profile',info,{headers:headers})
+		.then(data=>{	
+			dispatch({
+				type: types.SET_PROFILE_SUCCESS,
+				isSetSuccess:true,
+				data: data
+				})
+			})
+		.catch(e=>{
+			console.log(e);
+			dispatch({
+				type: types.SET_PROFILE_FAIL,
+				isSetSuccess:false,
+				data: {}
 			})
 			})
 	} 

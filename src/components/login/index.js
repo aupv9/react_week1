@@ -8,9 +8,13 @@ import * as hash from 'password-hash'
 
 class Login extends Component {
 
+    // khi có props mới thì sẽ chạy
     componentWillReceiveProps(nextProps){
-        if(nextProps.todos.loginSuccess && this.state.isInputValid){
-            this.setState({ isSucess:nextProps.todos.loginSuccess})
+        if(nextProps.todos.isLoginSuccess && this.state.isInputValid){
+            this.setState({ 
+                isSucess:nextProps.todos.isLoginSuccess,
+                data:nextProps.todos.data.data.token
+            })            
         }else{
             Swal.fire({
                     title: 'Email or Password is not correct ',
@@ -25,6 +29,7 @@ class Login extends Component {
     }
     state={
         isSucess:false,
+        data:"",
         email:"",
         password:"",
         isInputValid: true,
@@ -72,8 +77,9 @@ class Login extends Component {
             };
         }
     }
+    // method login
     login =()=>{
-
+        //kiểm tra đầu vào xem có hợp lệ không
         if(!this.state.email || !this.state.password ){
             Swal.fire({
                 title: 'Email or Password is not null ',
@@ -105,6 +111,7 @@ class Login extends Component {
         }else{
             // const passHash=hash.generate(this.state.password)
             // console.log(hash.verify(this.state.password,passHash))
+            
             this.props.onLogin(this.state.email,this.state.password)
         }
     
@@ -119,7 +126,10 @@ class Login extends Component {
                 showConfirmButton: false,
                 timer: 1500
               })
-              return <Redirect to="/profile"></Redirect>
+            //lưu dữ liệu vào local khi login thành công
+            localStorage.setItem("user",JSON.stringify({email:this.state.email,
+                password:this.state.password,data:this.state.data}))
+            return <Redirect to="/profile"></Redirect>
              
           }
         return (
@@ -138,7 +148,6 @@ class Login extends Component {
                  </div>
                  <div className="form-group">
                      <button type="button" onClick={this.login} >LOGIN</button>
-                    
                     <Link to="/home/sign-up" id="sign-up">
                         <button type="button" >SIGN UP</button>
                     </Link>
@@ -159,4 +168,5 @@ class Login extends Component {
 
         }
 };
+//connect với store
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

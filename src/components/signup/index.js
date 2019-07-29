@@ -43,7 +43,6 @@ class SignUp extends Component {
           errorMessage: errorMessage
         })
       }
-
     /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
         const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -80,7 +79,6 @@ class SignUp extends Component {
                     }
             })
         }
-      
     }
     signup=()=>{
         if(!this.state.email || !this.state.password || !this.state.confirmPassword){
@@ -158,15 +156,15 @@ class SignUp extends Component {
     }
 }
 
-const mapStateToProps=(state)=>({
-    todos:state.auth    
-});
-const mapDispatchToProps = dispatch => {
-    return {
-        onSignUp: (email, password) => { 
-            dispatch(singup(email, password));
-        }
+    const mapStateToProps=(state)=>({
+        todos:state.auth    
+    });
+    const mapDispatchToProps = dispatch => {
+        return {
+            onSignUp: (email, password) => { 
+                dispatch(singup(email, password));
+            }
 
-    }
-};
+        }
+    };
 export default connect(mapStateToProps,mapDispatchToProps)(SignUp);
