@@ -6,9 +6,20 @@ import Swal from 'sweetalert2';
 import {Redirect} from 'react-router-dom'
 class Profile_Content extends Component {
 
+    componentWillMount(){
+        if(localStorage.getItem("user")){
+            const user =JSON.parse( localStorage.getItem("user"));
+            console.log(user.data)
+            this.props.onGetProfile(user.data)
+            this.setState({
+                email:user.email,
+                password:user.password
+            })
+        }
 
+    }
     componentWillReceiveProps(nextProps){
-        const user=nextProps.todos;
+        let user=nextProps.todos;
         console.log(user)
         /// nếu get dữ liệu thành công sẽ set lại value và hiển thị thông tin 
         if(user.isGetProfile){
@@ -20,15 +31,24 @@ class Profile_Content extends Component {
             })
         }
         if(user.isSetSuccess){
-            console.log(user.data.data.data.avatar)
+            console.log("set profile")
             this.setState({
-                display_name:user.data.data.display_name,
-               display_info:user.data.data.display_info,
-               phone:user.data.data.phone,
-               avatar:user.data.data.avatar,
+                display_name:nextProps.todos.data.data.display_name,
+                display_info:nextProps.todos.data.data.display_info,
+                phone:nextProps.todos.data.data.phone,
+                avatar:nextProps.todos.data.data.avatar,
            })
         }
     }
+    shouldComponentUpdate(nextProps, nextState) {
+
+        let user=nextProps.todos;
+        if(user.isSetSuccess || user.isGetProfile)
+            return true;
+        return false;
+
+    }
+    
     // variable global
     state={
         email:"",
@@ -110,17 +130,7 @@ class Profile_Content extends Component {
         }
         reader.readAsDataURL(file)
     }
-    componentWillMount(){
-        if(localStorage.getItem("user")){
-            const user =JSON.parse( localStorage.getItem("user"));
-            console.log(user.data)
-            this.props.onGetProfile(user.data)
-            this.setState({
-                email:user.email,
-                password:user.password
-            })
-        }
-    }
+
     render() {
         if(localStorage.getItem("user") === null){
             return <Redirect to="/"></Redirect>

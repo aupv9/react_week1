@@ -13,10 +13,14 @@ class Header extends Component {
         var d = document.getElementById("option-profile");
         if(this.state.sign % 2 === 0){
             d.classList.add("show-box");
-            this.state.sign++;
+            this.setState({
+                sign:this.state.sign++
+            })
         }else{
             d.classList.remove("show-box");
-            this.state.sign++;
+            this.setState({
+                sign:this.state.sign++
+            })
         }
     }
 
