@@ -109,8 +109,26 @@ class Login extends Component {
         }else{
             // const passHash=hash.generate(this.state.password)
             // console.log(hash.verify(this.state.password,passHash))
-            
             this.props.onLogin(this.state.email,this.state.password)
+            let timerInterval
+            Swal.fire({
+              title: 'Login!',
+              html: 'I will login in ... seconds.',
+              timer: 324232000,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                    
+              }
+            })
         }
     
     }

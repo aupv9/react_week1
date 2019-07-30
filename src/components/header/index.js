@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
 class Header extends Component {
 
     state={
-        token:""
+        token:"",
+        isLogout:false
     }
     logout=()=>{
         Swal.fire({
@@ -23,6 +24,24 @@ class Header extends Component {
           }).then((result) => {
             if (result.value) {
               this.props.onLogout(this.state.token)
+              let timerInterval
+            Swal.fire({
+              title: 'Login!',
+              html: 'I will logout in ... seconds.',
+              timer: 100,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+              }
+            })
             }
           })
         
@@ -41,6 +60,8 @@ class Header extends Component {
         if(nextProps.todos.isLogout ){
             console.log("logout success")
             localStorage.removeItem("user")
+        }else{
+
         }
     }
     render() {
