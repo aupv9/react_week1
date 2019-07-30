@@ -1,54 +1,66 @@
 import * as types from '../../types';
 
-var initState={isLoginSuccess:false,isSignupSuccess:false}
+var initState={isLogin:false,isSignup:false}
 
 var taskReducer=(state=initState,action)=>{
     switch (action.type) {
         case types.LOGIN_SUCCESS:
             return {
                 ...state,
-                isLoginSuccess: action.isLoginSuccess,
+                isLogin: action.isLogin,
                 data:action.data
             }
         case types.LOGIN_FAIL: 
             return  {
                 ...state,
-                isLoginSuccess: action.isLoginSuccess,
+                isLogin: action.isLogin,
                 data:action.data
             }
         case types.SIGNUP_SUCCESS: 
             return  {
                 ...state,
-                isSignupSuccess: action.data
+                isSignup: action.data
             }
         case types.SIGNUP_FAIL: 
             return  {
                 ...state,
-                isSignupSuccess: action.data
+                isSignup: action.data
             }
         case types.GET_PROFILE_SUCCESS: 
             return  {
                 ...state,
-                isGetProfile:action.isGetSuccess,
+                isGetProfile:action.isGet,
                 data: action.data
             }
         case types.GET_PROFILE_FAIL: 
             return  {
                 ...state,
-                isGetProfile:action.isGetSuccess,
+                isGetProfile:action.isGet,
                 data: action.data
             }
         case types.SET_PROFILE_SUCCESS: 
             return  {
                 ...state,
-                isSetSuccess:action.isSetSuccess,
+                isSet:action.isSet,
                 data: action.data
             }
         case types.SET_PROFILE_FAIL: 
             return  {
                 ...state,
-                isSetSuccess:action.isSetSuccess,
+                isSet:action.isSet,
                 data: action.data
+            }    
+        case types.LOGOUT_SUCCESS: 
+            return  {
+                ...state,
+                isLogout:action.isLogout,
+                
+            }
+        case types.LOGOUT_FAIL: 
+            return  {
+                ...state,
+                isLogout:action.isLogout,
+                
             }        
         default:
             return state;

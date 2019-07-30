@@ -14,11 +14,10 @@ a:hover{
    
     height: 50px;
     background: #55cbb0;
-   
+    width:auto;
     .header-logo{
         width: 90%;
     }
-
 
     /*star logo*/
     #logo{
@@ -35,29 +34,10 @@ a:hover{
         text-align: center;
         padding: 10px;
         color:#fff;
-
+        button{
+            color: #fff
+        }
        
-        #option-profile{
-            box-shadow: 5px 3px 15px 5px #9f9f9f;
-            margin-left: 25px;
-            background:#fff;
-            width: 100px;
-            height: 80px;
-            z-index: 2000;
-            color: black;
-            display: none;
-            > li{
-                text-decoration: none;
-                list-style: none;
-                padding: 6px
-            }
-            a{
-                cursor: pointer;
-            }
-        }
-        .show-box{
-            display: block !important;
-        }
     }
 }
 

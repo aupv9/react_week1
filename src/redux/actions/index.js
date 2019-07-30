@@ -11,7 +11,7 @@ export const login = (email,pass) => {
 		.then(data=>{	
 			dispatch({
 				type: types.LOGIN_SUCCESS,
-					isLoginSuccess: true,
+				isLogin: true,
 					data:data
 				})
 		})
@@ -19,7 +19,7 @@ export const login = (email,pass) => {
 			console.log(e);
 			dispatch({
 				type: types.LOGIN_FAIL,
-				isLoginSuccess: false,
+				isLogin: false,
 				data:e
 			})
 		})
@@ -59,7 +59,7 @@ export const getProfile = (token) => {
 			console.log("succes get profile")	
 			dispatch({
 				type: types.GET_PROFILE_SUCCESS,
-					isGetSuccess:true,
+					isGet:true,
 					data: data.data
 				})
 			})
@@ -67,13 +67,35 @@ export const getProfile = (token) => {
 			console.log(e);
 			dispatch({
 				type: types.GET_PROFILE_FAIL,
-				isGetSuccess:false,
+				isGet:false,
 				data:[]
 			})
 		})
 	} 
 }
 
+
+export const logout = (token) => {
+	return dispatch =>{
+		const headers={
+			'x-user-token':token
+		}
+		axios.post('https://terralogic-training.web.app/api/logout',{},{headers:headers})
+		.then(data=>{	
+			dispatch({
+				type: types.LOGOUT_SUCCESS,
+				isLogout:true
+				})
+			})
+		.catch(e=>{
+			console.log(e);
+			dispatch({
+				type: types.LOGOUT_FAIL,
+				isLogout:false
+			})
+		})
+	} 
+}
 
 export const update = (info,token) => {
 	return dispatch =>{
@@ -84,7 +106,7 @@ export const update = (info,token) => {
 		.then(data=>{	
 			dispatch({
 				type: types.SET_PROFILE_SUCCESS,
-				isSetSuccess:true,
+				isSet:true,
 				data: data
 				})
 			})
@@ -92,7 +114,7 @@ export const update = (info,token) => {
 			console.log(e);
 			dispatch({
 				type: types.SET_PROFILE_FAIL,
-				isSetSuccess:false,
+				isSet:false,
 				data: {}
 			})
 			})

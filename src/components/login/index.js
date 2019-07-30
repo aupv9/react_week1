@@ -4,15 +4,14 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/actions'
 import Swal from 'sweetalert2'
  import {Link} from 'react-router-dom'
-import * as hash from 'password-hash'
 
 class Login extends Component {
 
     // khi có props mới thì sẽ chạy
     componentWillReceiveProps(nextProps){
-        if(nextProps.todos.isLoginSuccess && this.state.isInputValid){
+        if(nextProps.todos.isLogin && this.state.isInputValid){
             this.setState({ 
-                isSucess:nextProps.todos.isLoginSuccess,
+                isSucess:nextProps.todos.isLogin,
                 data:nextProps.todos.data.data.token
             })            
         }else{
@@ -25,7 +24,6 @@ class Login extends Component {
                     }
             })
         }
-      
     }
     state={
         isSucess:false,

@@ -1,45 +1,81 @@
 import React, { Component } from 'react';
 import './style.scss';
 import logo from '../../img/terra-logo.png';
-import {Link} from 'react-router-dom';
+import {connect} from'react-redux';
+import {logout} from'../../redux/actions';
+import {Redirect} from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class Header extends Component {
 
     state={
-        sign:0
+        token:""
     }
-    // ẩn hiện option logout
-    showOption=()=>{
-        var d = document.getElementById("option-profile");
-        if(this.state.sign % 2 === 0){
-            d.classList.add("show-box");
-            this.state.sign++;
-        }else{
-            d.classList.remove("show-box");
-            this.state.sign++;
-        }
+    logout=()=>{
+        Swal.fire({
+            title: 'Logout ?',
+            text: "You want logout now!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+          }).then((result) => {
+            if (result.value) {
+              this.props.onLogout(this.state.token)
+            }
+          })
+        
     }
 
+    componentWillMount(){
+        if(localStorage.getItem("user")){
+            const user =JSON.parse( localStorage.getItem("user"));
+            console.log(user.data)
+            this.setState({
+                token:user.data,
+            })
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.todos.isLogout ){
+            console.log("logout success")
+            localStorage.removeItem("user")
+        }
+    }
     render() {
+        if(!localStorage.getItem("user")){
+            return <Redirect to="/"></Redirect>
+        }
         return (
             <div className="row" id="header">
                 <div className="header-logo">
-                    <Link to="/"> <img src={logo} id="logo"></img></Link> 
+                    <img src={logo} id="logo"></img>
                 </div>
                 <div className="header-right">
-                    <a href="#" onClick={this.showOption} ><p>PROFILE</p></a>
-                    <ul id="option-profile" className="">
-                        <li>
-                            <a><span>Profile</span></a>
-                        </li>
-                        <li>
-                            <a><span>Logout</span></a>
-                        </li>
-                    </ul>
+                <div className="dropdown">
+                    <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        PROFILE
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a className="dropdown-item" >Profile</a>
+                        <a className="dropdown-item" onClick={this.logout} >Logout</a>
+                    </div>
+                    </div>
                 </div>
             </div>
         );
     }
 }
-
-export default Header;
+const mapStateToProps=(state)=>({
+    todos:state.auth    
+});
+const mapDispatchToProps = dispatch => {
+    return {
+    onLogout:(token)=>{
+       dispatch(logout(token));
+        }
+    }
+};
+// connect react với store của redux 
+export default connect(mapStateToProps,mapDispatchToProps)(Header);
