@@ -60,7 +60,7 @@ class SignUp extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.todos.signupSuccess && this.state.isInputValid){
+        if(nextProps.todos.isSignup && this.state.isInputValid){
             Swal.fire({
                 title: 'Sign up success ',
                 animation: true,

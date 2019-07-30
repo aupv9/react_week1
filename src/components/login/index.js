@@ -4,15 +4,14 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/actions'
 import Swal from 'sweetalert2'
  import {Link} from 'react-router-dom'
-import * as hash from 'password-hash'
 
 class Login extends Component {
 
     // khi có props mới thì sẽ chạy
     componentWillReceiveProps(nextProps){
-        if(nextProps.todos.isLoginSuccess && this.state.isInputValid){
+        if(nextProps.todos.isLogin && this.state.isInputValid){
             this.setState({ 
-                isSucess:nextProps.todos.isLoginSuccess,
+                isSucess:nextProps.todos.isLogin,
                 data:nextProps.todos.data.data.token
             })            
         }else{
@@ -25,7 +24,6 @@ class Login extends Component {
                     }
             })
         }
-      
     }
     state={
         isSucess:false,
@@ -64,7 +62,7 @@ class Login extends Component {
 
     /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
-        const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
             return {
                 isInputValid: true,
@@ -111,8 +109,26 @@ class Login extends Component {
         }else{
             // const passHash=hash.generate(this.state.password)
             // console.log(hash.verify(this.state.password,passHash))
-            
             this.props.onLogin(this.state.email,this.state.password)
+            let timerInterval
+            Swal.fire({
+              title: 'Login!',
+              html: 'I will login in ... seconds.',
+              timer: 324232000,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                    
+              }
+            })
         }
     
     }
