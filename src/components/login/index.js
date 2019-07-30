@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../../redux/actions'
+import {login,getProfile} from '../../redux/actions'
 import Swal from 'sweetalert2'
  import {Link} from 'react-router-dom'
 
@@ -13,7 +13,13 @@ class Login extends Component {
             this.setState({ 
                 isSucess:nextProps.todos.isLogin,
                 data:nextProps.todos.data.data.token
-            })            
+            }) 
+            
+            if(nextProps.todos.isGetProfile){
+                console.log("yes")
+                localStorage.setItem("user",JSON.stringify(nextProps.todos.data))
+                console.log(this.state.data)
+            }           
         }else{
             Swal.fire({
                     title: 'Email or Password is not correct ',
@@ -33,7 +39,6 @@ class Login extends Component {
         isInputValid: true,
         errorMessage: ''
     }
-     // method để set value cho state 
      handleChange=(e)=>{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -51,7 +56,6 @@ class Login extends Component {
         )
       }
     
-    //method kiểm tra giá trị email nhập vào 
     handleInputValidation = event => {
         const { isInputValid, errorMessage } = this.validateInput(this.state.email);
         this.setState({
@@ -60,7 +64,6 @@ class Login extends Component {
         })
       }
 
-    /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
         const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
@@ -77,7 +80,6 @@ class Login extends Component {
     }
     // method login
     login =()=>{
-        //kiểm tra đầu vào xem có hợp lệ không
         if(!this.state.email || !this.state.password ){
             Swal.fire({
                 title: 'Email or Password is not null ',
@@ -132,7 +134,7 @@ class Login extends Component {
         }
     
     }
-    
+
     render() {
         if(this.state.isSucess){
             Swal.fire({
@@ -140,11 +142,9 @@ class Login extends Component {
                 type: 'success',
                 title: 'Login success',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
               })
-            //lưu dữ liệu vào local khi login thành công
-            localStorage.setItem("user",JSON.stringify({email:this.state.email,
-                password:this.state.password,data:this.state.data}))
+            this.props.onGetProfile(this.state.data);
             return <Redirect to="/profile"></Redirect>
              
           }
@@ -180,7 +180,10 @@ class Login extends Component {
         return {
             onLogin: (email, password) => { 
                 dispatch(login(email, password));
-            }
+            },
+            onGetProfile: token =>{
+                dispatch(getProfile(token))
+            },
 
         }
 };

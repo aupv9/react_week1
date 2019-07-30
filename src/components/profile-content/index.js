@@ -9,29 +9,17 @@ class Profile_Content extends Component {
     componentWillMount(){
         if(localStorage.getItem("user")){
             const user =JSON.parse( localStorage.getItem("user"));
-            console.log(user.data)
-            this.props.onGetProfile(user.data)
             this.setState({
-                email:user.email,
-                password:user.password
+                display_name:user.data.display_name,
+                display_info:user.data.display_info,
+                phone:user.data.phone,
+                avatar:user.data.avatar,
             })
         }
-
     }
     componentWillReceiveProps(nextProps){
-        let user=nextProps.todos;
-        console.log(user)
-        /// 
-        if(user.isGetProfile){
-            this.setState({
-                 display_name:user.data.data.display_name,
-                display_info:user.data.data.display_info,
-                phone:user.data.data.phone,
-                avatar:user.data.data.avatar,
-            })
-        }
+        let user=nextProps.todos;        
         if(user.isSetSuccess){
-            console.log("set profile")
             this.setState({
                 display_name:nextProps.todos.data.data.display_name,
                 display_info:nextProps.todos.data.data.display_info,
@@ -41,14 +29,12 @@ class Profile_Content extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-
         let user=nextProps.todos;
         if(user.isSetSuccess || user.isGetProfile)
             return true;
         return false;
 
     }
-    
     // variable global
     state={
         email:"",
@@ -61,7 +47,6 @@ class Profile_Content extends Component {
         file: "",
         avatar: ""
     }
-    // phương thức set lại thông tin user
     updateInfo = () =>{
         const {display_name,display_info, phone,avatar}=this.state;
         // kiểm tra tính hợp lệ 
@@ -109,7 +94,6 @@ class Profile_Content extends Component {
         }
         
     }   
-    //lấy dữ liệu nhập từ bàn phím gán vào state
     handleChange=(e)=>{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -118,7 +102,6 @@ class Profile_Content extends Component {
             [name]: value
         });
     }
-    // method lấy ảnh từ máy 
     handleChangeFile=(e)=>{
         let reader = new FileReader();
         let file = e.target.files[0];
@@ -192,13 +175,10 @@ class Profile_Content extends Component {
     });
     const mapDispatchToProps = dispatch => {
         return {
-        onGetProfile: token =>{
-            dispatch(getProfile(token))
-        },
         onUpdate:(infoUpdate,token)=>{
            dispatch(update(infoUpdate,token));
             }
         }
     };
-    // connect react với store của redux 
+    // connect react with store of  redux 
 export default connect(mapStateToProps,mapDispatchToProps)(Profile_Content);
