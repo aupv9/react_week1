@@ -56,7 +56,6 @@ export const getProfile = (token) => {
 		}
 		axios.post('https://terralogic-training.web.app/api/get_profile',{},{headers:headers})
 		.then(data=>{	
-			console.log("succes get profile")	
 			dispatch({
 				type: types.GET_PROFILE_SUCCESS,
 					isGet:true,

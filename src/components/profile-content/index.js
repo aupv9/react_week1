@@ -9,8 +9,6 @@ class Profile_Content extends Component {
 
     componentWillReceiveProps(nextProps){
         let user=nextProps.todos;
-        console.log(user)
-        /// nếu get dữ liệu thành công sẽ set lại value và hiển thị thông tin 
         if(user.isGetProfile){
             this.setState({
                 display_name:user.data.data.display_name,
@@ -19,13 +17,14 @@ class Profile_Content extends Component {
                 avatar:user.data.data.avatar,
             })
         }
-        if(user.isSetSuccess){
-            console.log(user.data.data.data.avatar)
+        if(user.isSet){
+            console.log(user.isSet)
+            console.log(nextProps.todos.data.data.data)
             this.setState({
-                display_name:user.data.data.display_name,
-               display_info:user.data.data.display_info,
-               phone:user.data.data.phone,
-               avatar:user.data.data.avatar,
+                display_name:nextProps.todos.data.data.data.display_name,
+               display_info:nextProps.todos.data.data.data.display_info,
+               phone:nextProps.todos.data.data.data.phone,
+               avatar:nextProps.todos.data.data.data.avatar,
            })
         }
     }
