@@ -112,6 +112,7 @@ class Profile_Content extends Component {
           });
         }
         reader.readAsDataURL(file)
+        console.log(file)
     }
 
     render() {

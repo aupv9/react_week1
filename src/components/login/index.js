@@ -7,14 +7,14 @@ import Swal from 'sweetalert2'
 
 class Login extends Component {
 
-    // khi có props mới thì sẽ chạy
     componentWillReceiveProps(nextProps){
         if(nextProps.todos.isLogin && this.state.isInputValid){
             this.setState({ 
                 isSucess:nextProps.todos.isLogin,
                 data:nextProps.todos.data.data.token
             }) 
-            
+            localStorage.setItem("sign",JSON.stringify(nextProps.todos.data))
+
             if(nextProps.todos.isGetProfile){
                 console.log("yes")
                 localStorage.setItem("user",JSON.stringify(nextProps.todos.data))
