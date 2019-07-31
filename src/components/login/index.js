@@ -7,7 +7,6 @@ import Swal from 'sweetalert2'
 
 class Login extends Component {
 
-    // khi có props mới thì sẽ chạy
     componentWillReceiveProps(nextProps){
         if(nextProps.todos.isLogin && this.state.isInputValid){
             this.setState({ 
@@ -33,7 +32,6 @@ class Login extends Component {
         isInputValid: true,
         errorMessage: ''
     }
-     // method để set value cho state 
      handleChange=(e)=>{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -51,7 +49,6 @@ class Login extends Component {
         )
       }
     
-    //method kiểm tra giá trị email nhập vào 
     handleInputValidation = event => {
         const { isInputValid, errorMessage } = this.validateInput(this.state.email);
         this.setState({
@@ -60,7 +57,6 @@ class Login extends Component {
         })
       }
 
-    /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
         const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
@@ -77,7 +73,6 @@ class Login extends Component {
     }
     // method login
     login =()=>{
-        //kiểm tra đầu vào xem có hợp lệ không
         if(!this.state.email || !this.state.password ){
             Swal.fire({
                 title: 'Email or Password is not null ',
@@ -142,7 +137,6 @@ class Login extends Component {
                 showConfirmButton: false,
                 timer: 1500
               })
-            //lưu dữ liệu vào local khi login thành công
             localStorage.setItem("user",JSON.stringify({email:this.state.email,
                 password:this.state.password,data:this.state.data}))
             return <Redirect to="/profile"></Redirect>
@@ -184,5 +178,4 @@ class Login extends Component {
 
         }
 };
-//connect với store
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

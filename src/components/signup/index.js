@@ -16,7 +16,6 @@ class SignUp extends Component {
         errorMessage: ''
     }
 
-    // method để set value cho state 
     handleChange=(e)=>{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -34,7 +33,6 @@ class SignUp extends Component {
         )
       }
     
-    //method kiểm tra giá trị email nhập vào 
     handleInputValidation = event => {
         const { isInputValid, errorMessage } = this.validateInput(this.state.email);
         this.setState({
@@ -42,7 +40,6 @@ class SignUp extends Component {
           errorMessage: errorMessage
         })
       }
-    /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
         const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
