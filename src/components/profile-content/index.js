@@ -8,12 +8,12 @@ class Profile_Content extends Component {
 
 
     componentWillReceiveProps(nextProps){
-        const user=nextProps.todos;
+        let user=nextProps.todos;
         console.log(user)
         /// nếu get dữ liệu thành công sẽ set lại value và hiển thị thông tin 
         if(user.isGetProfile){
             this.setState({
-                 display_name:user.data.data.display_name,
+                display_name:user.data.data.display_name,
                 display_info:user.data.data.display_info,
                 phone:user.data.data.phone,
                 avatar:user.data.data.avatar,

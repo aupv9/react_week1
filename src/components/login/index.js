@@ -62,7 +62,7 @@ class Login extends Component {
 
     /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
-        const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
             return {
                 isInputValid: true,
