@@ -4,6 +4,7 @@ import './style.scss';
 import {Route } from 'react-router-dom'
 import Login from '../../components/login';
 import SignUp from '../../components/signup';
+import NOTFOUND404 from '../../components/404';
 class Home extends Component {
     render() {
         console.log(this.props)
@@ -11,6 +12,7 @@ class Home extends Component {
            <div id="home" className="container-fuild">
                <div className="row w-100 h-100">
                <HomeLeft></HomeLeft>
+
                <Route exact path={`${this.props.match.url}`} component={Login}></Route>
                <Route  path={`${this.props.match.url}/login`} component={Login}></Route>
                <Route  path={`${this.props.match.url}/sign-up`} component={SignUp}></Route>

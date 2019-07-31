@@ -126,6 +126,10 @@ class SignUp extends Component {
         }
     }
     render() {
+        if(localStorage.getItem("user")){
+            return <Redirect to="/profile"></Redirect>
+             
+        }
         if(this.state.isSignup){
             return <Redirect to="/"></Redirect>
         }

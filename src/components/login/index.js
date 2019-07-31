@@ -129,6 +129,10 @@ class Login extends Component {
     }
     
     render() {
+        if(localStorage.getItem("user")){
+            return <Redirect to="/profile"></Redirect>
+             
+        }
         if(this.state.isSucess){
             Swal.fire({
                 position: 'top-end',

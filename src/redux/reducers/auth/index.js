@@ -3,6 +3,7 @@ import * as types from '../../types';
 var initState={isLogin:false,isSignup:false}
 
 var taskReducer=(state=initState,action)=>{
+    state.action=action.type
     switch (action.type) {
         case types.LOGIN_SUCCESS:
             return {
