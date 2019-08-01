@@ -26,6 +26,26 @@ class Profile_Content extends Component {
                phone:nextProps.todos.data.data.data.phone,
                avatar:nextProps.todos.data.data.data.avatar,
            })
+           Swal.fire({
+            title: 'Update Sucess' ,
+            type:"success",
+            animation: true,
+            type: 'success',
+            customClass: {
+              popup: 'animated tada'
+            }
+        })
+        }
+    }
+    componentWillMount(){
+        if(localStorage.getItem("user")){
+            const user =JSON.parse( localStorage.getItem("user"));
+            console.log(user.data)
+            this.props.onGetProfile(user.data)
+            this.setState({
+                email:user.email,
+                password:user.password
+            })
         }
     }
     // variable global
@@ -40,7 +60,7 @@ class Profile_Content extends Component {
         file: "",
         avatar: ""
     }
-    // phương thức set lại thông tin user
+    // method update
     updateInfo = () =>{
         const {display_name,display_info, phone,avatar}=this.state;
         // kiểm tra tính hợp lệ 
@@ -76,19 +96,30 @@ class Profile_Content extends Component {
             // dữ liệu vào hợp lệ thì tiến hành update 
             const user =JSON.parse( localStorage.getItem("user"));
             this.props.onUpdate({display_name,display_info, phone,avatar},user.data);   
+            let timerInterval
             Swal.fire({
-                    title: 'Update Sucess' ,
-                    type:"success",
-                    animation: true,
-                    type: 'info',
-                    customClass: {
-                      popup: 'animated tada'
-                    }
-                })
+              title: 'Login!',
+              html: 'You will update in ... seconds.',
+              timer: 324232000,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                    
+              }
+            })
+          
         }
         
     }   
-    //lấy dữ liệu nhập từ bàn phím gán vào state
+    // get value 
     handleChange=(e)=>{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -97,7 +128,7 @@ class Profile_Content extends Component {
             [name]: value
         });
     }
-    // method lấy ảnh từ máy 
+    // method get image
     handleChangeFile=(e)=>{
         let reader = new FileReader();
         let file = e.target.files[0];
@@ -109,17 +140,7 @@ class Profile_Content extends Component {
         }
         reader.readAsDataURL(file)
     }
-    componentWillMount(){
-        if(localStorage.getItem("user")){
-            const user =JSON.parse( localStorage.getItem("user"));
-            console.log(user.data)
-            this.props.onGetProfile(user.data)
-            this.setState({
-                email:user.email,
-                password:user.password
-            })
-        }
-    }
+    
     render() {
         if(localStorage.getItem("user") === null){
             return <Redirect to="/"></Redirect>
@@ -189,5 +210,5 @@ class Profile_Content extends Component {
             }
         }
     };
-    // connect react với store của redux 
+    // connect react with store
 export default connect(mapStateToProps,mapDispatchToProps)(Profile_Content);

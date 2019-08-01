@@ -3,7 +3,7 @@ $background-main:#ffffff;
 *{
   margin: 0px; 
 	padding: 0px; 
-	box-sizing: border-box;
+	box-sizing: border-box !important;
 }
 
 body, html {
@@ -20,7 +20,6 @@ body, html {
     height: 1000px;
     padding: 0;
     margin: 0;
-  
     
 }
 @media (max-width: 576px) {

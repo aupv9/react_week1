@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import {Link,Redirect} from 'react-router-dom'
-import { singup } from '../../redux/actions';
+import { signUp } from '../../redux/actions';
 import {connect} from 'react-redux';
 import Swal from 'sweetalert2'
 import './style.scss';
 
 class SignUp extends Component {
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.todos.isSignup && this.state.isInputValid){
+            Swal.fire({
+                title: 'Sign up success ',
+                animation: true,
+                type: 'success',
+                customClass: {
+                  popup: 'animated tada'
+                }
+            
+        })  
+            this.setState({
+                isSignup:true
+            })
+        }else{
+            Swal.fire({
+                    title: 'Sign up fail  ',
+                    animation: true,
+                    type: 'error',
+                    customClass: {
+                      popup: 'animated tada'
+                    }
+            })
+        }
+    }
     state={
         isSignup:false,
         email:"",
@@ -55,32 +80,8 @@ class SignUp extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.todos.isSignup && this.state.isInputValid){
-            Swal.fire({
-                title: 'Sign up success ',
-                animation: true,
-                type: 'success',
-                customClass: {
-                  popup: 'animated tada'
-                }
-            
-        })  
-            this.setState({
-                isSignup:true
-            })
-        }else{
-            Swal.fire({
-                    title: 'Sign up fail  ',
-                    animation: true,
-                    type: 'error',
-                    customClass: {
-                      popup: 'animated tada'
-                    }
-            })
-        }
-    }
-    signup=()=>{
+   
+    signuUp=()=>{
         if(!this.state.email || !this.state.password || !this.state.confirmPassword){
             Swal.fire({
                 title: 'Email or Password is not null  ',
@@ -122,7 +123,25 @@ class SignUp extends Component {
             // const hassPass=hash.generate(this.state.password)
             // localStorage.setItem("pass",JSON.stringify(hassPass))
             this.props.onSignUp(this.state.email,this.state.password);
-
+  let timerInterval
+            Swal.fire({
+              title: 'Login!',
+              html: 'You will sign up account in ... seconds.',
+              timer: 32000,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                  
+                }, 100)
+              },
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                    
+              }
+            })
         }
     }
     render() {
@@ -152,10 +171,10 @@ class SignUp extends Component {
                  <input type="password" id="ip-pass" name="confirmPassword" onChange={this.handleChange}></input>
                  </div>
                  <div className="form-group">
-                 <button type="button" onClick={this.signup} id="btn-signup" name="btn-sign">SIGN UP</button>
                  <Link to="/home">
-                    <button type="button" id="btn-login" name="btn-sign">LOGIN</button>
+                    <button type="button" id="btn-login" name="btn-sign">BACK</button>
                  </Link>
+                 <button type="button" onClick={this.signuUp} id="btn-signup" name="btn-sign">SIGN UP</button>
                  </div>
              </form>
          </div>
@@ -169,7 +188,7 @@ class SignUp extends Component {
     const mapDispatchToProps = dispatch => {
         return {
             onSignUp: (email, password) => { 
-                dispatch(singup(email, password));
+                dispatch(signUp(email, password));
             }
 
         }

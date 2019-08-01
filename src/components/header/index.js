@@ -44,7 +44,6 @@ class Header extends Component {
             })
             }
           })
-        
     }
 
     componentWillMount(){
@@ -98,5 +97,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 };
-// connect react với store của redux 
 export default connect(mapStateToProps,mapDispatchToProps)(Header);

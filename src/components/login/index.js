@@ -108,7 +108,7 @@ class Login extends Component {
             let timerInterval
             Swal.fire({
               title: 'Login!',
-              html: 'I will login in ... seconds.',
+              html: 'You will login in ... seconds.',
               timer: 324232000,
               onBeforeOpen: () => {
                 Swal.showLoading()
@@ -131,7 +131,6 @@ class Login extends Component {
     render() {
         if(localStorage.getItem("user")){
             return <Redirect to="/profile"></Redirect>
-             
         }
         if(this.state.isSucess){
             Swal.fire({
@@ -144,7 +143,6 @@ class Login extends Component {
             localStorage.setItem("user",JSON.stringify({email:this.state.email,
                 password:this.state.password,data:this.state.data}))
             return <Redirect to="/profile"></Redirect>
-             
           }
         return (
             <div  id="box-login">
@@ -179,7 +177,6 @@ class Login extends Component {
             onLogin: (email, password) => { 
                 dispatch(login(email, password));
             }
-
         }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

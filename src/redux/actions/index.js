@@ -26,7 +26,7 @@ export const login = (email,pass) => {
 	} 
 }
 
-export const singup = (email,pass) => {
+export const signUp = (email,pass) => {
 	return dispatch =>{
 		const body={
 			email:email,
