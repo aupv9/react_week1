@@ -150,7 +150,7 @@ class Login extends Component {
           }
         return (
             <div  id="box-login">
-            <h1 id="title-login" className="title">LOGIN</h1>
+            <h1 id="title-login" className="title">LOGIN 1</h1>
              <form id="form-login" >
                  <div className="form-group">
                  <label>Email</label><br />
