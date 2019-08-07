@@ -8,17 +8,17 @@ import Swal from 'sweetalert2'
 class Login extends Component {
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.todos.isLogin && this.state.isInputValid){
+        if(nextProps.todos.isLogin && this.state.isInputValid || !nextProps.todos.isGetProfile){
+            console.log(nextProps.todos.data.data.token)
             this.setState({ 
                 isSucess:nextProps.todos.isLogin,
                 data:nextProps.todos.data.data.token
             }) 
-            localStorage.setItem("sign",JSON.stringify(nextProps.todos.data))
+            localStorage.setItem("sign",JSON.stringify(nextProps.todos.data.data.token))
 
             if(nextProps.todos.isGetProfile){
                 console.log("yes")
                 localStorage.setItem("user",JSON.stringify(nextProps.todos.data))
-                console.log(this.state.data)
             }           
         }else{
             Swal.fire({
@@ -112,6 +112,7 @@ class Login extends Component {
             // const passHash=hash.generate(this.state.password)
             // console.log(hash.verify(this.state.password,passHash))
             this.props.onLogin(this.state.email,this.state.password)
+            
             let timerInterval
             Swal.fire({
               title: 'Login!',
@@ -146,7 +147,6 @@ class Login extends Component {
               })
             this.props.onGetProfile(this.state.data);
             return <Redirect to="/profile"></Redirect>
-             
           }
         return (
             <div  id="box-login">
@@ -163,7 +163,7 @@ class Login extends Component {
                  <input type="password" id="ip-pass"name="password"onChange={this.handleChange}></input>
                  </div>
                  <div className="form-group">
-                     <button type="button" onClick={this.login} >LOGIN</button>
+                     <button type="button" onClick={this.login}>LOGIN</button>
                     <Link to="/home/sign-up" id="sign-up">
                         <button type="button" >SIGN UP</button>
                     </Link>

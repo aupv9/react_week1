@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import {Link,Redirect} from 'react-router-dom'
 import { singup } from '../../redux/actions';
 import {connect} from 'react-redux';
 import Swal from 'sweetalert2'
 import './style.scss';
-import * as hash from 'password-hash'
 
 class SignUp extends Component {
 
     state={
-        isSucess:false,
+        isSignup:false,
         email:"",
         password:"",
         confirmPassword:"",
@@ -45,7 +44,7 @@ class SignUp extends Component {
       }
     /// method kiểm tra email có định dạng hợp lệ không 
      validateInput = (checkingText) => {
-        const regexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        const regexp =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (regexp.exec(checkingText) !== null) {
             return {
                 isInputValid: true,
@@ -68,7 +67,11 @@ class SignUp extends Component {
                 customClass: {
                   popup: 'animated tada'
                 }
-        })
+            
+        })  
+            this.setState({
+                isSignup:true
+            })
         }else{
             Swal.fire({
                     title: 'Sign up fail  ',
@@ -126,6 +129,9 @@ class SignUp extends Component {
         }
     }
     render() {
+        if(this.state.isSignup){
+            return <Redirect to="/"></Redirect>
+        }
         return (
             <div  id="box-sign">
             <h1 id="title-signup"className="title" >SIGN UP</h1>

@@ -26,6 +26,7 @@ class Profile_Content extends Component {
                 phone:nextProps.todos.data.data.phone,
                 avatar:nextProps.todos.data.data.avatar,
            })
+           
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
@@ -33,7 +34,6 @@ class Profile_Content extends Component {
         if(user.isSetSuccess || user.isGetProfile)
             return true;
         return false;
-
     }
     // variable global
     state={
@@ -49,7 +49,6 @@ class Profile_Content extends Component {
     }
     updateInfo = () =>{
         const {display_name,display_info, phone,avatar}=this.state;
-        // kiểm tra tính hợp lệ 
         if(!this.state.password || !this.state.display_name ||
             !this.state.display_info || !this.state.phone || !this.state.avatar){
             Swal.fire({
@@ -80,8 +79,8 @@ class Profile_Content extends Component {
         })
         }else{
             // dữ liệu vào hợp lệ thì tiến hành update 
-            const user =JSON.parse( localStorage.getItem("user"));
-            this.props.onUpdate({display_name,display_info, phone,avatar},user.data);   
+            const data=JSON.parse(localStorage.getItem("sign"))
+            this.props.onUpdate({display_name,display_info, phone,avatar},data.data);   
             Swal.fire({
                     title: 'Update Sucess' ,
                     type:"success",
@@ -112,11 +111,10 @@ class Profile_Content extends Component {
           });
         }
         reader.readAsDataURL(file)
-        console.log(file)
     }
 
     render() {
-        if(localStorage.getItem("user") === null){
+        if(!localStorage.getItem("user")){
             return <Redirect to="/"></Redirect>
         }
         return (
