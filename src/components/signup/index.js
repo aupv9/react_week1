@@ -6,7 +6,32 @@ import Swal from 'sweetalert2'
 import './style.scss';
 
 class SignUp extends Component {
-
+    
+    componentWillReceiveProps(nextProps){
+        if(nextProps.todos.isSignup && this.state.isInputValid){
+            Swal.fire({
+                title: 'Sign up success ',
+                animation: true,
+                type: 'success',
+                customClass: {
+                  popup: 'animated tada'
+                }
+            
+        })  
+            this.setState({
+                isSignup:true
+            })
+        }else{
+            Swal.fire({
+                    title: 'Sign up fail  ',
+                    animation: true,
+                    type: 'error',
+                    customClass: {
+                      popup: 'animated tada'
+                    }
+            })
+        }
+    }
     state={
         isSignup:false,
         email:"",
@@ -58,31 +83,7 @@ class SignUp extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.todos.isSignup && this.state.isInputValid){
-            Swal.fire({
-                title: 'Sign up success ',
-                animation: true,
-                type: 'success',
-                customClass: {
-                  popup: 'animated tada'
-                }
-            
-        })  
-            this.setState({
-                isSignup:true
-            })
-        }else{
-            Swal.fire({
-                    title: 'Sign up fail  ',
-                    animation: true,
-                    type: 'error',
-                    customClass: {
-                      popup: 'animated tada'
-                    }
-            })
-        }
-    }
+  
     signup=()=>{
         if(!this.state.email || !this.state.password || !this.state.confirmPassword){
             Swal.fire({
@@ -122,8 +123,7 @@ class SignUp extends Component {
                 }
         })
         }else{
-            // const hassPass=hash.generate(this.state.password)
-            // localStorage.setItem("pass",JSON.stringify(hassPass))
+
             this.props.onSignUp(this.state.email,this.state.password);
 
         }
