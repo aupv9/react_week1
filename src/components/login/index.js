@@ -153,7 +153,7 @@ class Login extends Component {
             <h1 id="title-login" className="title">LOGIN and SIGN UP</h1>
              <form id="form-login" >
                  <div className="form-group">
-                 <label>Email</label><br />
+                 <label>Email chat</label><br />
                  <input type="email" id="ip-email" onChange={this.handleChange} name="email" onBlur={this.handleInputValidation}></input>
                  {this.FormError(this.state.isInputValid,
                      this.state.errorMessage)}
