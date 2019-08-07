@@ -1,9 +1,9 @@
-language: generic 
-
+language: generic
 cache:
   directories:
-    - node_modules
+  - node_modules
 deploy:
   provider: heroku
-  api_key: ...
+  api_key:
+    secure: aaaaNlb97qEoUSjnJ4BHcX11Ns8EPy+gZWQHVC+N6CMhKu8IAYgs9RbKf+9c1wQkX5ukl637J4dSA7gZguCTMiJ8CZ25qjC1/7oKoaHYzWRyQDIla1ILZC4eNfUUc0SvcUIER1bx+dwJASHhxx3VWsAufdaybBaAFYNIN/FfrIB9n52b60HbwAmC9PEpDzQNt//AeMW0hvBNbpgoZvphf1SX1TYlSz4pOTOS1setpnBleeYeLBDHy/WTx3XmqhtTK7HMJvJyuGwtOd2W9bBWx/w8xy3oEIrcmalTcgY4N+Xtf/Psz8X0Yiq+NSe7C5M7YDs005iGo49hjooq99twTA2CfpzXS3ZBb6Izpagti9Yf3XKB9lPuouF5cFj0FXz7UNPdZpT1PUMD7N5rjEJqSQseuVVzskOIHGWdb6oZjeYu4HnyVxxBpABdEvAVpktCelckfEV1eBZ1KuAoMZpM2PnRIOSHVcQlyqrpH850GIMeosi+g/qNlnIL2pXcsCTsBj6IDKVxqslFYaoC5LighYpsFY6tDL7/kVT28ldObtySXtP1nS+IjnCNGxzdCCRZVhuqEC20kS0TmCtvl6FGtZRyK9tblnOjiI238oQSQ/w56fdCZ4dCanGqY9Ddxei9EVQP8t3mVG6o5Y9Bx68L3RZnfgFn5R6eJIlHBcHhc6k=
   app: test-travisci
